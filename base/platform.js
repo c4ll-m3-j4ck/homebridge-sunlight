@@ -54,6 +54,8 @@ class SunlightPlatform {
           || sensorConfig.upperThreshold === undefined
           || typeof sensorConfig.lowerThreshold !== 'number'
           || typeof sensorConfig.upperThreshold !== 'number'
+          || typeof sensorConfig.lowerAltitudeThreshold !== 'number'
+          || typeof sensorConfig.upperAltitudeThreshold !== 'number'
           || sensorConfig.lowerThreshold > 720
           || sensorConfig.lowerThreshold < -360
           || sensorConfig.upperThreshold > 720
@@ -91,6 +93,8 @@ class SunlightPlatform {
         || sensorConfig.upperThreshold === undefined
         || typeof sensorConfig.lowerThreshold !== 'number'
         || typeof sensorConfig.upperThreshold !== 'number'
+        || typeof sensorConfig.lowerAltitudeThreshold !== 'number'
+        || typeof sensorConfig.upperAltitudeThreshold !== 'number'
         || sensorConfig.lowerThreshold > 720
         || sensorConfig.lowerThreshold < -360
         || sensorConfig.upperThreshold > 720

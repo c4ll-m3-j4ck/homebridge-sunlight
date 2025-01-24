@@ -7,7 +7,9 @@
         {
             "name": "North",
             "lowerThreshold": -55,
-            "upperThreshold": 55
+            "upperThreshold": 55,
+            "lowerAltitudeThreshold": 25,
+            "upperAltitudeThreshold": 55
         },
         {
             "name": "East",

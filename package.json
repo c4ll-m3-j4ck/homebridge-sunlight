@@ -1,5 +1,5 @@
 {
-  "name": "homebridge-sunlight",
+  "name": "@nigel-peach/homebridge-sunlight",
   "displayName": "Sunlight",
   "version": "0.2.3",
   "description": "Homebridge plugin for contact sensors monitoring sun position, daylight and cloudiness",

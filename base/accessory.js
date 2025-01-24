@@ -81,7 +81,7 @@ class SunlightAccessory {
   updateState() {
     const { config, platformConfig, log } = this;
     const { lat, long, apikey } = platformConfig;
-    const { lowerThreshold, upperThreshold } = config;
+    const { lowerThreshold, upperThreshold, lowerAltitudeThreshold, upperAltitudeThreshold } = config;
     const threshold = [lowerThreshold, upperThreshold];
 
     if (!lat || !long || typeof lat !== 'number' || typeof long !== 'number') {
@@ -91,8 +91,10 @@ class SunlightAccessory {
 
     const sunPos = suncalc.getPosition(Date.now(), lat, long);
     let sunPosDegrees = Math.abs((sunPos.azimuth * 180) / Math.PI + 180);
+    let sunAltitudeDegress = Math.abs((sunPos.altitude * 180) / Math.PI);
 
     if (platformConfig.debugLog) log(`Current azimuth: ${sunPosDegrees}°`);
+    if (platformConfig.debugLog) log(`Current altitude: ${sunAltitudeDegress}°`);
 
     if (threshold[0] > threshold[1]) {
       const tempThreshold = threshold[1];
@@ -123,12 +125,16 @@ class SunlightAccessory {
       }
     }
 
+    if ((lowerAltitudeThreshold > sunAltitudeDegress || upperAltitudeThreshold < sunAltitudeDegress) && newState === false) {
+      newState = false
+    }
+
     // Sun is in relevant azimuth range, lets check daylight and clouds
     if (newState && apikey) {
       let sunState = this.returnSunFromCache();
       let cloudState = this.returnCloudinessFromCache();
       if (platformConfig.debugLog) log(`Sun state: ${sunState}%, Cloud state: ${cloudState}%`);
-      newState = sunState > 10 && sunState <90 && cloudState <= 25;
+      newState = sunState > 10 && sunState < 90 && cloudState <= 25;
     }
 
     return newState;
