@@ -1,9 +1,9 @@
 {
   "name": "homebridge-sunlight-altitude",
   "displayName": "Sunlight",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Homebridge plugin for contact sensors monitoring sun position, daylight and cloudiness",
-  "author": "Christian Wegerhoff <christian.wegerhoff@icloud.com>",
+  "author": "Michel Löw<michel.loew@jvm.ch>",
   "contributors": [
     {
       "name": "Maximilian Krause",
@@ -23,10 +23,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/Krillle/homebridge-sunlight.git"
+    "url": "git://github.com/c4ll-m3-j4ck/homebridge-sunlight.git"
   },
   "bugs": {
-    "url": "https://github.com/Krillle/homebridge-sunlight/issues"
+    "url": "https://github.com/c4ll-m3-j4ck/homebridge-sunlight/issues"
   },
   "license": "Apache-2.0",
   "dependencies": {
