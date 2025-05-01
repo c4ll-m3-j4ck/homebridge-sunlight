@@ -134,7 +134,7 @@ class SunlightAccessory {
       let sunState = this.returnSunFromCache();
       let cloudState = this.returnCloudinessFromCache();
       if (platformConfig.debugLog) log(`Sun state: ${sunState}%, Cloud state: ${cloudState}%`);
-      newState = sunState > 10 && sunState < 90 && cloudState <= 25;
+      newState = sunState > 2 && sunState < 98 && cloudState <= 25;
     }
 
     return newState;
@@ -161,19 +161,19 @@ class SunlightAccessory {
         if (platformConfig.debugLog) log("Checking weather: %s", url);
         request(url, function (error, response, responseBody) {
           if (error) {
-              log("HTTP get weather function failed: %s", error.message);
-              reject(error);
+            log("HTTP get weather function failed: %s", error.message);
+            reject(error);
           } else {
-              try {
-                  if (platformConfig.debugLog) log("Server response:", responseBody);
-                  this.cachedWeatherObj = JSON.parse(responseBody);
-                  this.lastupdate = (new Date().getTime() / 1000);
-                  log(`Sun state: ${this.returnSunFromCache()}%, Cloud state: ${this.returnCloudinessFromCache()}%`);
-                  resolve(response.statusCode);
-              } catch (error2) {
-                  log("Getting Weather failed: %s", error2, responseBody);
-                  reject(error2);
-              }
+            try {
+              if (platformConfig.debugLog) log("Server response:", responseBody);
+              this.cachedWeatherObj = JSON.parse(responseBody);
+              this.lastupdate = (new Date().getTime() / 1000);
+              log(`Sun state: ${this.returnSunFromCache()}%, Cloud state: ${this.returnCloudinessFromCache()}%`);
+              resolve(response.statusCode);
+            } catch (error2) {
+              log("Getting Weather failed: %s", error2, responseBody);
+              reject(error2);
+            }
           }
         }.bind(this))
       })
@@ -183,7 +183,7 @@ class SunlightAccessory {
   returnCloudinessFromCache() {
     var value;
     if (this.cachedWeatherObj && this.cachedWeatherObj["clouds"]) {
-        value = parseFloat(this.cachedWeatherObj["clouds"]["all"]);
+      value = parseFloat(this.cachedWeatherObj["clouds"]["all"]);
     }
     return value;
   };
@@ -191,19 +191,19 @@ class SunlightAccessory {
   returnSunFromCache() {
     var value;
     if (this.cachedWeatherObj && this.cachedWeatherObj["sys"]) {
-        var sunrise = parseInt(this.cachedWeatherObj["sys"]["sunrise"]);
-        var sunset = parseInt(this.cachedWeatherObj["sys"]["sunset"]);
-        var now = Math.round(new Date().getTime() / 1000);
-        if (now > sunset) {
-            // It's already dark outside
-            value = 100;
-        } else if (now > sunrise) {
-            // calculate how far though the day (where day is from sunrise to sunset) we are
-            var intervalLen = (sunset - sunrise);
-            value = (((now - sunrise) / intervalLen) * 100).toFixed(2);
-        } else {
-          value = 0;
-        }
+      var sunrise = parseInt(this.cachedWeatherObj["sys"]["sunrise"]);
+      var sunset = parseInt(this.cachedWeatherObj["sys"]["sunset"]);
+      var now = Math.round(new Date().getTime() / 1000);
+      if (now > sunset) {
+        // It's already dark outside
+        value = 100;
+      } else if (now > sunrise) {
+        // calculate how far though the day (where day is from sunrise to sunset) we are
+        var intervalLen = (sunset - sunrise);
+        value = (((now - sunrise) / intervalLen) * 100).toFixed(2);
+      } else {
+        value = 0;
+      }
     }
     return value;
   };
